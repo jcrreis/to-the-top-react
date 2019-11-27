@@ -120,7 +120,7 @@ class LoginForm extends Component {
             console.log(response.status)
             response.then(response => {
                 alert("you are now logged in with key: " + response.data.key )
-                console.log(response.data.key)
+                console.log(response)
             })
             .catch(error => {
                 alert("bad request")
@@ -147,28 +147,34 @@ class GameList extends Component{
 
     constructor(props){
         super(props)
-        axios.get('http://localhost:8000/games/')
-          .then(function (response) {
-            console.log(response.data.length); //get length games collection
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .finally(function () {
-            // always executed
-          });  
+        let isLoaded = false;
+        let games = null;
+        
+    }
+
+    componentDidMount(){
+        games = axios.get('http://localhost:8000/games/')
+        .then(function (response) {
+            this.setState({
+                isLoaded = true,
+            })  
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(function () {
+          // always executed
+        });
     }
 
 
 
 
-   render(){    
 
-          return( <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-            </ul>);
+   render(){    
+           return( <ul>
+               {/* {this.state.listGames}                 listGames = this.state.games.map((g) => <li >{g.name}</li>),*/} 
+                </ul>);
 
     }
 }
@@ -178,21 +184,78 @@ class Game extends Component{
     constructor(props){
         super(props)
         this.state = {
-            username: "",
-            password: ""
+            name: "",
+            price: "",
+            description: "",
+            storeLink: "",
+            trailerUrl: ""
         }
     }
 
+handleSubmit = event => {
+    event.preventDefault()
+}
 
-   render(){    
+handleUsernameChange = e =>{
+     e.preventDefault()
+     console.log(e.target.value)
+     this.setState({name:e.target.value})
+}
 
-          return(  <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-            </ul>);
+handlePasswordChange = e =>{
+    e.preventDefault()
+    this.setState({price:e.target.value})
+}
 
-    }
+handleEmailChange = e =>{
+    e.preventDefault()
+    this.setState({description:e.target.value})
+}
+
+storeLinkChange = e =>{
+    e.preventDefault()
+    this.setState({storeLink:e.target.value})
+}
+
+trailerUrlChange = e =>{
+    e.preventDefault()
+    this.setState({trailerUrl:e.target.value})
+}
+
+handleOnClick = (event) =>{
+    event.preventDefault()
+    
+        const userData = {
+            name: this.state.username,
+            price: this.state.password,
+            description: this.state.email,
+            trailerUrl: this.state.trailerUrl,
+            storeUrl: this.state.storeLink
+
+        }
+        const response =  axios.post('http://localhost:8000/register/', userData);
+        response.then(response => {
+            console.log(response.data)
+            alert("registration was sucessfull")
+        })
+        .catch(error => {
+            alert("bad request")
+        })
+        }
+render(){
+    return(
+        <form onSubmit={this.handleSubmit}>
+            <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/>
+            <input type="text" placeholder="email" value={this.state.email} onChange={this.handleEmailChange}/>
+            <input type="text" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+            <input type="text" placeholder="trailerUrl" value={this.state.trailerUrl} onChange={this.trailerUrlChange}/>
+            <input type="text" placeholder="storeLink" value={this.state.storeLink} onChange={this.storeLinkChange}/>
+            <button type="submit" onClick={this.handleOnClick}>Register Game</button>
+        </form>
+    )
+
+}
+
 }
 
     export default class Test extends Component {
@@ -224,6 +287,7 @@ class Game extends Component{
         <LoginForm/>
         <NameForm/>
         <GameList/>
+        <Game/>
         </>
       )
     }
