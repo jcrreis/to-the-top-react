@@ -1,0 +1,22 @@
+export const UPVOTE = "UPVOTE";
+
+export const LOADGAMES = "LOADGAMES";
+
+export const LOADGAMESWITHERROR = "LOADGAMESWITHERROR";
+
+export const DOWNVOTE = "DOWNVOTE";
+
+export const LOGIN = "LOGIN";
+
+export const LOGOUT = "LOGOUT";
+
+export const SORTBYUPVOTEDESCENDING = "SORTBYUPVOTEDESCENDING";
+
+export const SORTBYUPVOTEASCENDING = "SORTBYUPVOTEASCENDING";
+
+export const DELETEGAME = "DELETEGAME";
+
+export const EDITGAME = "EDITGAME";
+
+export const ADDGAME = "ADDGAME";
+
