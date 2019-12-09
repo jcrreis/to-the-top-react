@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {withRouter,Redirect} from 'react-router-dom'
 
 import { FormControl } from '@material-ui/core';
 import { Container } from '@material-ui/core';
@@ -101,15 +102,17 @@ const ButtonDiv = styled.div`
         storeUrl: this.state.storeLink
     }
       const response =  axios.post('http://localhost:8000/games/', gameData);
-      response.then(() => {
-        store.dispatch({type: ADDGAME, payload: {game: gameData}})
+      response.then(response => {
+        store.dispatch({type: ADDGAME, payload: {game: response.data}})
         if(this.state.parent === "UserProfile")
           this.props.history.push({pathname: "/myprofile"})
         else
-          this.props.history.goBack()
+          this.props.history.push({pathname: "/" })
       })
       .catch(() => {
+        alert("error")
           this.setState({
+            
             error: true,
           })
       })
@@ -163,4 +166,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps)(GameForm)
+export default withRouter(connect(mapStateToProps)(GameForm))

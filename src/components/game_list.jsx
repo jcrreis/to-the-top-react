@@ -97,7 +97,6 @@ class GameList extends Component{
     })
   }
   componentWillMount(){
-    loadGamesToStore()
   }
 
   handleSortingDescending = () => {         
