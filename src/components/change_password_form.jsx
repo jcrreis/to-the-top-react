@@ -126,7 +126,6 @@ export default class ChangePassword extends Component{
     return(
 
       <>
-        <Header/>
         <StyledCard>
           <StyledAvatar><LockOutlinedIcon /></StyledAvatar>
           <StyledCardHeader title="Change Password">

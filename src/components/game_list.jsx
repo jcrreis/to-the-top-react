@@ -144,6 +144,11 @@ class GameList extends Component{
       }  
     })
   }
+
+  routeRedirectOnClick = gameid => {
+    this.props.history.push("/game/"+gameid);
+  }
+
   
   render(){  
 
@@ -188,7 +193,7 @@ class GameList extends Component{
               <Grid item xs={4} key={i}>
                 <StyledCard id={game.id}>
                   <StyledCardHeader title={game.name}/>
-                  <CardContent>
+                  <CardContent onClick={() => this.routeRedirectOnClick(game.id)}>
                     <StyledTypography variant="body1" color="textSecondary" component="p">{game.description}</StyledTypography>
                     <DivDetails>
                       <StyledTypography variant="body2" color="textSecondary" component="p">Price: {game.price}</StyledTypography> 

@@ -49,8 +49,6 @@ class Header extends Component{
     return(
         <AppBar  position="relative">
           <Toolbar>
-            <IconButton edge="start"  color="inherit" aria-label="menu">
-            </IconButton>
             <StyledButton href="/" color="inherit">Home</StyledButton>
             <RightElement>
               {pButton}

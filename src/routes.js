@@ -9,6 +9,8 @@ import ChangePassword from "./components/change_password_form"
 import UserProfile from "./components/user_profile"
 import EditForm from "./components/edit_game_form"
 import loadGamesToStore from './assets/utils/loadgames';
+import Header from "./components/header"
+import GameDetail from "./components/game_detail"
 
 function Routes(){
 
@@ -16,8 +18,11 @@ function Routes(){
    loadUserToStore()
 
     return (
+      <>
+        <Header/>
         <Router>
             <Switch>
+                <Route path="/game/:id" component={GameDetail}/>
                 <Route path="/login" component={LoginForm}/>
                 <Route path="/signup" component={CreateAccount}/>
                 <Route path="/create" component={GameForm}/>
@@ -27,6 +32,7 @@ function Routes(){
                 <Route path="/" component={Home}/>
             </Switch>
         </Router>
+      </>
 
     )
 

@@ -84,7 +84,6 @@ class UserProfile extends Component{
 
       return(
           <>
-            <Header/>
             <Container>
               <Div>                    
                 <UserDetails username={this.props.username} id={this.props.id} email={this.props.email}/>

@@ -127,7 +127,6 @@ export default class CreateAccount extends Component{
 
       return(
         <>
-          <Header/>
           <StyledCard>
             <StyledAvatar><LockOutlinedIcon /></StyledAvatar>
             <StyledCardHeader title="Sign Up"/>

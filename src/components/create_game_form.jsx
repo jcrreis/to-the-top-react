@@ -126,7 +126,6 @@ const ButtonDiv = styled.div`
 
     return(
     <>    
-      <Header/>
       <StyledCard>
         <StyledCardHeader title="Add Game">
           </StyledCardHeader>

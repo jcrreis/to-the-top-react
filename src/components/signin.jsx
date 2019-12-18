@@ -120,7 +120,6 @@ class LoginForm extends Component {
 
       return(
         <>
-          <Header/>
           <StyledCard>
             <StyledAvatar><LockOutlinedIcon /></StyledAvatar>
             <StyledCardHeader title="Login">

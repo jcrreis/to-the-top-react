@@ -115,7 +115,6 @@ const ButtonDiv = styled.div`
       if(this.state.invalidInput) error = <Typography color="error" > Invalid input fields.Please Try again.</Typography>
       return(
         <>    
-          <Header/>
           <StyledCard>
             <StyledCardHeader title="Edit Game">
             </StyledCardHeader>
