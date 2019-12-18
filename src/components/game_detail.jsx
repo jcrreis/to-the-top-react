@@ -11,13 +11,15 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Grid from  '@material-ui/core/Grid';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 
 import styled from 'styled-components';
 
 import axios from "../assets/utils/axios";
 import store from "../assets/utils/store";
 import {DELETEGAME} from "../assets/utils/constants";
+import {UPVOTE,DOWNVOTE} from "../assets/utils/constants";
 
 
 
@@ -34,7 +36,9 @@ const StyledCardHeader = styled(CardHeader)`
 const StyledTypography = styled(Typography)`
   overflow-wrap: break-word;
 `
-
+const UpvotesNumberDiv = styled.div`
+  padding: 0 0 10px 10px;
+`
 
 
 class GameDetail extends Component{
@@ -55,6 +59,57 @@ class GameDetail extends Component{
       })
     })
   }
+
+  handleDeleteButton = (gameid) => {
+    const response =  axios.delete('http://localhost:8000/games/'+gameid)
+    response.then(() => {
+      store.dispatch({type: DELETEGAME, payload: {gameid: gameid}})
+    })
+    this.props.history.push({pathname:'/'})
+  }
+
+  handleEditButton = (game) => {
+    this.props.history.push({pathname: '/edit',
+      state: {
+        id: game.id,
+        name: game.name,
+        price: game.price,
+        description: game.description,
+        storelink: game.storeLink,
+        trailerurl: game.trailerUrl,
+        user: this.props.id,
+      }  
+    })
+  }
+
+  handleUpvote = (gameid) => {
+    const data = {
+      game: gameid[0],
+    }
+    const response =  axios.post('http://localhost:8000/upvotes/games/'+gameid[0],data);
+      response.then(() => {
+        store.dispatch({type: UPVOTE, payload: {gameid: gameid[0]}})
+      })
+      .catch(() => {
+        const response2 = axios.delete('http://localhost:8000/upvotes/games/'+gameid[0],data);
+        response2.then(()=>{
+          store.dispatch({type: DOWNVOTE, payload: {gameid: gameid[0]}})
+        })
+        response2.catch(() => {
+          this.setState({
+            notLoggedIn: true,
+          })
+        })
+    })
+  }
+
+  handleUpvoteRender(gameid){
+    if (this.props.upvotedGames.includes(gameid))
+        return  <ThumbUpAltIcon onClick={this.handleUpvote.bind(this,[gameid])}/>    
+    else 
+        return <ThumbUpOutlinedIcon onClick={this.handleUpvote.bind(this,[gameid])}/>
+  }
+
 
   render(){
     let delButton
@@ -86,9 +141,13 @@ class GameDetail extends Component{
               <StyledTypography>Trailer URL: {this.state.game.trailerUrl}</StyledTypography>
             </CardContent> 
             <CardActions>
+              <div>
               {delButton}
               {editButton}
+              </div>
+              {this.handleUpvoteRender(this.state.game.id)}
             </CardActions>
+            <UpvotesNumberDiv>{this.state.game.upvotes}</UpvotesNumberDiv>
           </StyledCard>
       )
     }
@@ -98,6 +157,7 @@ class GameDetail extends Component{
 
 const mapStateToProps = state => ({
   userId: state.id,
+  upvotedGames: state.upvotedGames
 });
 
 export default withRouter(connect(mapStateToProps)(GameDetail))

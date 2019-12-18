@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "./header";
 import { connect } from "react-redux";
 import UserDetails from "./user_details"
 import Button from '@material-ui/core/Button';

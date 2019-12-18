@@ -24,9 +24,8 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import styled from 'styled-components';
 
 import store from '../assets/utils/store';
-import {UPVOTE,LOADGAMESWITHERROR,LOADGAMES,DOWNVOTE} from "../assets/utils/constants";
+import {UPVOTE,DOWNVOTE} from "../assets/utils/constants";
 import {SORTBYUPVOTEDESCENDING,SORTBYUPVOTEASCENDING} from "../assets/utils/constants";
-import loadGamesToStore from "../assets/utils/loadgames"
 
 const StyledCard = styled(Card)`
   max-width: 345px !important;
@@ -192,16 +191,18 @@ class GameList extends Component{
               {this.state.currentlyDisplayed.map((game,i) => (
               <Grid item xs={4} key={i}>
                 <StyledCard id={game.id}>
-                  <StyledCardHeader title={game.name}/>
-                  <CardContent onClick={() => this.routeRedirectOnClick(game.id)}>
-                    <StyledTypography variant="body1" color="textSecondary" component="p">{game.description}</StyledTypography>
-                    <DivDetails>
-                      <StyledTypography variant="body2" color="textSecondary" component="p">Price: {game.price}</StyledTypography> 
-                      <StyledTypography variant="body2" color="textSecondary" component="p">Trailer: {game.trailerUrl}</StyledTypography>                  
-                      <StyledTypography variant="body2" color="textSecondary" component="p">Store: {game.storeLink}</StyledTypography>                  
-                      <StyledTypography variant="body2" color="textSecondary" component="p">Posted by: {game.user}</StyledTypography>
-                    </DivDetails>   
-                  </CardContent> 
+                  <div onClick={() => this.routeRedirectOnClick(game.id)}>
+                    <StyledCardHeader title={game.name}/>
+                    <CardContent >
+                      <StyledTypography variant="body1" color="textSecondary" component="p">{game.description}</StyledTypography>
+                      <DivDetails>
+                        <StyledTypography variant="body2" color="textSecondary" component="p">Price: {game.price}</StyledTypography> 
+                        <StyledTypography variant="body2" color="textSecondary" component="p">Trailer: {game.trailerUrl}</StyledTypography>                  
+                        <StyledTypography variant="body2" color="textSecondary" component="p">Store: {game.storeLink}</StyledTypography>                  
+                        <StyledTypography variant="body2" color="textSecondary" component="p">Posted by: {game.user}</StyledTypography>
+                      </DivDetails>   
+                    </CardContent> 
+                  </div>
                   <CardActions>
                     {this.handleUpvoteRender(game.id)}
                   </CardActions>

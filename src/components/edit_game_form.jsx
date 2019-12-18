@@ -15,7 +15,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography'
 
 import axios from "../assets/utils/axios"
-import Header from "./header"
 import store from "../assets/utils/store"
 import {EDITGAME} from "../assets/utils/constants"
 
